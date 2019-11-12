@@ -4,17 +4,17 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 
-consumer_key = 'CONSUMER_KEY'
-consumer_secret = 'CONSUMER_SECRET'
-access_token = 'ACCESS_TOKEN'
-access_secret = 'ACCESS_SECRET'
+consumer_key = 'consumer_key'
+consumer_secret = 'consumer_secret'
+access_token = 'access_token'
+access_secret = 'access_secret'
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 
 api = tweepy.API(auth)
 
-
+'''
 def process_or_store(tweet):
     print(json.dumps(tweet))
 
@@ -39,7 +39,7 @@ class MyListener(StreamListener):
 
     def on_data(self,data):
         try:
-            with open('python.json', 'a') as f:
+            with open('tweets.json', 'a') as f:
                 f.write(data)
                 return True
         except BaseException as e:
@@ -52,4 +52,11 @@ class MyListener(StreamListener):
 
 
 twitter_stream = Stream(auth, MyListener())
-twitter_stream.filter(track=['#python'])
+twitter_stream.filter(track=['#WednesdayWisdom'])
+'''
+
+with open('tweets.json', 'r') as f:
+    for line in f:
+        tweet = json.loads(line)
+        if tweet['geo'] != None:
+            print(tweet['text'])
